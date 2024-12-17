@@ -1,6 +1,5 @@
-// src/app/api/users/[userId]/route.ts
 import { adminDb, adminAuth } from '@/lib/firebase/admin';
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 
 // Helper function to handle errors
 function handleError(error: unknown) {
@@ -17,11 +16,11 @@ function handleError(error: unknown) {
 
 // Get single user
 export async function GET(
-  request: NextRequest,
-  { params }: { params: { userId: string } }
+  request: Request,
+  context: { params: { userId: string } }
 ) {
   try {
-    const userId = params.userId;
+    const userId = context.params.userId;
 
     // Validate user ID
     if (!userId) {
@@ -58,11 +57,11 @@ export async function GET(
 
 // Update user
 export async function PATCH(
-  request: NextRequest,
-  { params }: { params: { userId: string } }
+  request: Request,
+  context: { params: { userId: string } }
 ) {
   try {
-    const userId = params.userId;
+    const userId = context.params.userId;
     const updateData = await request.json();
 
     // Validate user ID
@@ -148,11 +147,11 @@ export async function PATCH(
 
 // Toggle user status (enable/disable)
 export async function PUT(
-  request: NextRequest,
-  { params }: { params: { userId: string } }
+  request: Request,
+  context: { params: { userId: string } }
 ) {
   try {
-    const userId = params.userId;
+    const userId = context.params.userId;
     const { disabled } = await request.json();
 
     // Validate user ID
@@ -217,11 +216,11 @@ export async function PUT(
 
 // Delete user
 export async function DELETE(
-  request: NextRequest,
-  { params }: { params: { userId: string } }
+  request: Request,
+  context: { params: { userId: string } }
 ) {
   try {
-    const userId = params.userId;
+    const userId = context.params.userId;
 
     // Validate user ID
     if (!userId) {
